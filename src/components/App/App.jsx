@@ -13,13 +13,9 @@ class App extends Component {
 
   componentDidMount() {
     const parse = JSON.parse(localStorage.getItem('contacts'));
-    if (parse && parse.length > 0) {
+    if (parse.length > 0) {
       this.setState({
         contacts: parse,
-      });
-    } else {
-      this.setState({
-        contacts: [],
       });
     }
   }
@@ -75,17 +71,24 @@ class App extends Component {
       <Base>
         <h2>Phonebook</h2>
         <ContacsForm handleSubmit={this.handleSubmit} />
-        <Filter filter={filter} handleFilterChange={this.handleFilterChange} />
-        <h2>Contacts</h2>
-        <ul>
-          <ContactItem
-            id={this.id}
-            name={this.name}
-            number={this.number}
-            filteredContacts={filteredContacts}
-            deleteContact={this.deleteContact}
-          />
-        </ul>
+        {this.state.contacts.length > 0 && (
+          <>
+            <Filter
+              filter={filter}
+              handleFilterChange={this.handleFilterChange}
+            />
+            <h2>Contacts</h2>
+            <ul>
+              <ContactItem
+                id={this.id}
+                name={this.name}
+                number={this.number}
+                filteredContacts={filteredContacts}
+                deleteContact={this.deleteContact}
+              />
+            </ul>
+          </>
+        )}
       </Base>
     );
   }
